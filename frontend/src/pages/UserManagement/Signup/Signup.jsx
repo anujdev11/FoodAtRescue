@@ -10,6 +10,7 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
@@ -17,9 +18,9 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/userContext";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { toast } from "react-toastify";
-import axios_api from "../../../common/axios";
-import { ROUTES } from "../../../common/constants";
-
+import { APP_ROLES, ROUTES } from "../../../common/constants";
+import UserPool from "../../../aws/cognitoUserPool";
+import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 const Signup = () => {
   const {
     state: { authenticated },
@@ -34,35 +35,51 @@ const Signup = () => {
     watch,
   } = useForm();
 
-  useEffect(() => {
-    if (authenticated) {
-      // toast.info("You are already Authenticated");
-      navigate(ROUTES.HOMEPAGE);
-    }
-  }, [authenticated]);
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     navigate(ROUTES.HOMEPAGE);
+  //   }
+  // }, [authenticated]);
+
   const onSubmit = (data) => {
     const { firstName, lastName, email, password, confirmPassword } = data;
-    const registrationDetails = {
-      firstName,
-      lastName,
+    const attributeList = [];
+    var dataEmail = {
+      Name: "email",
+      Value: email,
+    };
+    var dataName = {
+      Name: "name",
+      Value: firstName + " " + lastName,
+    };
+    var userRole = {
+      Name: "custom:user_role",
+      Value: APP_ROLES.APP_USER,
+    };
+    var attributeEmail = new CognitoUserAttribute(dataEmail);
+    var attributeName = new CognitoUserAttribute(dataName);
+    var attributeUserRole = new CognitoUserAttribute(userRole);
+
+    attributeList.push(attributeEmail);
+    attributeList.push(attributeName);
+    attributeList.push(attributeUserRole);
+
+    UserPool.signUp(
       email,
       password,
-      confirmPassword,
-    };
-    axios_api
-      .post("/users/appUserRegistration", registrationDetails)
-      .then((response) => {
-        if ((response.data.success = true)) {
-          toast.success(response?.data?.message);
-          reset();
-          navigate(ROUTES.LOGIN);
-        } else {
-          toast.error(response?.data?.message);
+      attributeList,
+      null,
+      function (err, result) {
+        debugger;
+        if (err) {
+          toast.error(err?.message || "Something went wrong");
+          return;
         }
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message || "Something went wrong");
-      });
+        toast.success("Verification Link Sent and Registered Sucessfully");
+        reset();
+        navigate(ROUTES.LOGIN);
+      }
+    );
   };
 
   const password = watch("password");
@@ -271,6 +288,24 @@ const Signup = () => {
                   </Link>
                 </Grid>
               </Grid>
+            </Box>
+            <Box py={2}>
+              <Divider>
+                <Typography variant="caption" component="div">
+                  Or
+                </Typography>
+              </Divider>
+              <Box pt={2} display="flex" justifyContent="center">
+                <Link
+                  onClick={() => {
+                    navigate(ROUTES.SIGNUP_FOOD_OWNER);
+                  }}
+                >
+                  <Typography variant="subtitle2" component="div">
+                    Sign Up as Food Owner
+                  </Typography>
+                </Link>
+              </Box>
             </Box>
           </Box>
         </Grid>

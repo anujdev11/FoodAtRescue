@@ -17,12 +17,12 @@ import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios_api from "../../../common/axios";
-import jwtDecode from "jwt-decode";
 import { AppContext } from "../../../context/userContext";
 import * as ActionTypes from "../../../common/actionTypes";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ROUTES } from "../../../common/constants";
+import { APP_ROLES, ROUTES } from "../../../common/constants";
+import UserPool from "../../../aws/cognitoUserPool";
+import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 
 const Login = () => {
   const {
@@ -37,36 +37,58 @@ const Login = () => {
     reset,
     trigger,
   } = useForm();
-  useEffect(() => {
-    if (authenticated) {
-      navigate(ROUTES.HOMEPAGE);
-    }
-  }, [authenticated]);
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     navigate(ROUTES.HOMEPAGE);
+  //   }
+  // }, [authenticated]);
   const onSubmit = (data) => {
     const { email, password } = data;
-    const loginCredentials = { email, password };
-    axios_api
-      .post("/users/appUserLogin", loginCredentials)
-      .then((response) => {
-        if ((response.data.success = true)) {
-          const { data } = response;
-          const decoded = jwtDecode(data.token);
-          dispatch({ type: ActionTypes.SET_TOKEN, data: data.token });
-          dispatch({ type: ActionTypes.SET_CURRENT_USER, data: data });
-          dispatch({ type: ActionTypes.SET_USER_ID, data: decoded.id });
-          dispatch({ type: ActionTypes.SET_AUTHENTICATED, data: true });
-          toast.success(response?.data?.message);
-          reset();
-          navigate(ROUTES.HOMEPAGE);
-        } else {
-          toast.error(response?.data?.message);
-        }
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message || "Something went wrong");
-      });
-  };
+    const user = new CognitoUser({
+      Username: email,
+      Pool: UserPool,
+    });
 
+    const authDetails = new AuthenticationDetails({
+      Username: email,
+      Password: password,
+    });
+
+    user.authenticateUser(authDetails, {
+      onSuccess: (data) => {
+        debugger;
+        dispatch({
+          type: ActionTypes.SET_TOKEN,
+          data: data.idToken.jwtToken,
+        });
+        dispatch({
+          type: ActionTypes.SET_CURRENT_USER,
+          data: data.idToken.payload,
+        });
+        dispatch({
+          type: ActionTypes.SET_USER_ID,
+          data: data.idToken.payload.email,
+        });
+        dispatch({ type: ActionTypes.SET_AUTHENTICATED, data: true });
+        dispatch({
+          type: ActionTypes.SET_ROLE,
+          data: data.idToken.payload["custom:user_role"],
+        });
+        if (data.idToken.payload["custom:user_role"] == APP_ROLES.FOOD_OWNER) {
+          toast.success("Logged In as Food Owner");
+        } else {
+          toast.success("Logged In Successfully");
+        }
+        navigate(ROUTES.HOMEPAGE);
+      },
+      onFailure: (err) => {
+        toast.error(err?.message || "Something went wrong");
+      },
+      newPasswordRequired: (data) => {
+        toast.error(data?.message || "Something went wrong");
+      },
+    });
+  };
   return (
     <>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -203,7 +225,7 @@ const Login = () => {
                     onClick={(event) => navigate(ROUTES.SIGNUP)}
                     variant="body2"
                   >
-                    {"Already Have Account? Sign Up"}
+                    {"Don't Have Account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>

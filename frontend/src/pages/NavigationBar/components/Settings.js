@@ -44,10 +44,8 @@ const Settings = () => {
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open User Setting">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar
-              alt={currentUser.firstName + " " + currentUser.lastName}
-              src={currentUser.imgURL}
-            />
+            <Avatar alt={currentUser.name} />
+            {/* src={currentUser.imgURL} */}
           </IconButton>
         </Tooltip>
         <Menu
@@ -68,27 +66,25 @@ const Settings = () => {
         >
           <MenuItem disableTouchRipple>
             <Typography textAlign="center">
-              <strong>
-                {currentUser.firstName} {currentUser.lastName}
-              </strong>
+              <strong>{currentUser.name}</strong>
             </Typography>
           </MenuItem>
           <MenuItem disableTouchRipple>
             <Typography textAlign="center">{currentUser.email}</Typography>
           </MenuItem>
           <Divider />
-          <MenuItem
+          {/* <MenuItem
             onClick={(event) => handleUserMenuClick(event, ROUTES.PROFILE)}
           >
             <Typography textAlign="center">Profile</Typography>
-          </MenuItem>
-          <MenuItem
+          </MenuItem> */}
+          {/* <MenuItem
             onClick={(event) =>
               handleUserMenuClick(event, ROUTES.CHANGEPASSWORD)
             }
           >
             <Typography textAlign="center">Change Password</Typography>
-          </MenuItem>
+          </MenuItem> */}
 
           <MenuItem
             onClick={(event) => handleUserMenuClick(event, ROUTES.LOGOUT)}

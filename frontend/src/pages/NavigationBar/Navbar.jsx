@@ -99,16 +99,10 @@ const Navbar = () => {
               }}
             >
               <MenuItem onClick={() => navigate(ROUTES.PROPERTY_LISTING)}>
-                <Typography textAlign="center">Property Rental</Typography>
+                <Typography textAlign="center">View Availabe Food</Typography>
               </MenuItem>
               <MenuItem onClick={() => navigate(ROUTES.VIEW_SERVICES)}>
-                <Typography textAlign="center">Services</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate(ROUTES.ROOMMATE_FINDER)}>
-                <Typography textAlign="center">Roommate Finder</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate(ROUTES.VIEW_FAVORITES)}>
-                <Typography textAlign="center">Favorites</Typography>
+                <Typography textAlign="center">Your Reserved Food</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -125,41 +119,13 @@ const Navbar = () => {
               // onClick={() => navigate(ROUTES.PROPERTY_LISTING)}
               sx={{ my: 2, color: "black", display: "block" }}
             >
-              PROPERTY RENTAL
+              View Availabe Food
             </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleClose}>Post Ad</MenuItem>
-              <MenuItem onClick={handleClose}>View All Properties</MenuItem>
-            </Menu>
             <Button
               onClick={() => navigate(ROUTES.VIEW_SERVICES)}
               sx={{ my: 2, color: "black", display: "block" }}
             >
-              Services
-            </Button>
-            <Button
-              onClick={() => navigate(ROUTES.ROOMMATE_FINDER)}
-              sx={{ my: 2, color: "black", display: "block" }}
-            >
-              ROOMMATE FINDER
-            </Button>
-            <Button
-              onClick={() =>
-                authenticated
-                  ? navigate(ROUTES.VIEW_FAVORITES)
-                  : navigate(ROUTES.LOGIN)
-              }
-              sx={{ my: 2, color: "black", display: "block" }}
-            >
-              Favorites
+              Your Reserved Food
             </Button>
           </Box>
           <Box

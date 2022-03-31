@@ -6,6 +6,8 @@ export const ROUTES = {
   HOMEPAGE: "/",
   LOGIN: "/login",
   SIGNUP: "/signup",
+  SIGNUP_FOOD_OWNER: "/signupFoodOwner",
+  LOGOUT: "/logout",
   NOT_FOUND: "*",
   ERROR: "/error",
 };
@@ -15,7 +17,9 @@ export const TOKEN = "TOKEN";
 export const USER = "USER";
 export const ADMIN = "ADMIN";
 export const USER_ID = "USER_ID";
+export const ROLE = "ROLE";
 
 export const APP_ROLES = {
   APP_USER: "app_user",
+  FOOD_OWNER: "food_owner",
 };

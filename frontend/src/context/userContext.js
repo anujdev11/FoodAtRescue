@@ -7,7 +7,7 @@ import { createContext, useReducer } from "react";
 
 import * as ActionTypes from "../common/actionTypes";
 import axios from "../common/axios";
-import { TOKEN, USER, USER_ID } from "../common/constants";
+import { TOKEN, USER, USER_ID, ROLE } from "../common/constants";
 
 const getLoggedInUser = () => {
   let loggedInUser = localStorage.getItem(USER);
@@ -20,12 +20,16 @@ const getUserId = () => {
     ? parseInt(localStorage.getItem(USER_ID))
     : "";
 };
+const getRole = () => {
+  return localStorage.getItem(ROLE) ? localStorage.getItem(ROLE) : "app_user";
+};
 
 const initialState = {
   currentUser: getLoggedInUser() || {},
   userId: getUserId(),
   authToken: localStorage.getItem(TOKEN),
   authenticated: false,
+  role: getRole(),
 };
 
 const reducer = (state, action) => {
@@ -46,6 +50,9 @@ const reducer = (state, action) => {
     case ActionTypes.SET_TOKEN:
       localStorage.setItem(TOKEN, action.data);
       return { ...state, authToken: action.data };
+    case ActionTypes.SET_ROLE:
+      localStorage.setItem(ROLE, action.data);
+      return { ...state, role: action.data };
     //! LOGOUT
     case ActionTypes.LOGOUT:
       delete axios.defaults.headers.common.Authorization;
@@ -84,6 +91,7 @@ function AppContextProvider({ children }) {
     const token = authToken || getToken();
     const user = getCurrentUser();
     const userId = getUserId();
+    const role = getRole();
 
     if (token) {
       axios.defaults.headers.common = {
@@ -93,6 +101,7 @@ function AppContextProvider({ children }) {
       dispatch({ type: ActionTypes.SET_AUTHENTICATED, data: true });
       dispatch({ type: ActionTypes.SET_CURRENT_USER, data: user });
       dispatch({ type: ActionTypes.SET_USER_ID, data: userId });
+      dispatch({ type: ActionTypes.SET_ROLE, data: role });
     }
   };
 

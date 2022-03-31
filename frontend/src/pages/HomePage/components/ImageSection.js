@@ -34,7 +34,7 @@ export default function ProductHero() {
         onClick={(event) => navigate(ROUTES.PROPERTY_LISTING)}
         sx={{ minWidth: 200, mt: 15 }}
       >
-        View All Properties
+        View All Food Postings
       </Button>
     </ImageSectionLayout>
   );

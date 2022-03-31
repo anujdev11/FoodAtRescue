@@ -12,6 +12,8 @@ import { AppContext } from "../context/userContext";
 import { ROUTES, TOKEN } from "../common/constants";
 import Login from "../pages/UserManagement/Login/Login";
 import Signup from "../pages/UserManagement/Signup/Signup";
+import SignupFoodOwner from "../pages/UserManagement/Signup/SignupFoodOwner";
+import Logout from "../Components/Logout";
 import HomePage from "../pages/HomePage/index";
 
 function Routing() {
@@ -29,6 +31,14 @@ function Routing() {
     {
       pageLink: ROUTES.SIGNUP,
       view: Signup,
+    },
+    {
+      pageLink: ROUTES.SIGNUP_FOOD_OWNER,
+      view: SignupFoodOwner,
+    },
+    {
+      pageLink: ROUTES.LOGOUT,
+      view: Logout,
     },
     {
       pageLink: ROUTES.ERROR,
