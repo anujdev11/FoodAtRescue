@@ -3,7 +3,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { SALT_VALUE, WEBSITE_LINK, JWT_SECRET } = require("../config/index");
-const { users } = require("../models");
+// const { users } = require("../models");
 const { sendEmail } = require("../utils/sendEmail");
 const { APP_USER, SUPER_ADMIN } = require("../config/constants");
 const passport = require("passport");
