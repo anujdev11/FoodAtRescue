@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const userRoute = require("./src/routes/userRoute");
+const foodRoute = require("./src/routes/foodRoute");
+const reservationRoute = require("./src/routes/reservationRoute");
 // const db = require("./src/models");
 const passport = require("passport");
 const path = require("path");
 const fs = require("fs");
-const AWS = require('aws-sdk');
-const { DYNAMO_REGION, DYNAMO_KEY, DYNAMO_SECRET_KEY } = require('./src/config/index');
+
 var corsOptions = {
   origin: ["http://localhost:3000"],
 };
@@ -24,6 +25,9 @@ require("./src/middleware/passport")(passport);
 
 app.use("/api/users", userRoute);
 
+app.use("/api/food", foodRoute);
+app.use("/api/reservation", reservationRoute);
+
 // app.use((req, res, next) => {
 //   res.status(404).send({
 //     status: 404,
@@ -31,16 +35,20 @@ app.use("/api/users", userRoute);
 //   });
 // });
 
-AWS.config.update({
-  region: DYNAMO_REGION,
-  accessKeyId: DYNAMO_KEY,
-  secretAccessKey: DYNAMO_SECRET_KEY,
+// AWS.config.update({
+//   region: DYNAMO_REGION,
+//   accessKeyId: DYNAMO_KEY,
+//   secretAccessKey: DYNAMO_SECRET_KEY,
+// });
+
+// const dynamoClient = new AWS.DynamoDB.DocumentClient();
+// const TABLE_NAME = 'food';
+
+//console.log(dynamoClient);
+
+const listener = app.listen(process.env.PORT || 8080, () => {
+  console.log("Your app is listening on port " + listener.address().port);
 });
-
-const dynamoClient = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = 'food';
-
-console.log(dynamoClient);
 
 // db.sequelize.sync().then(() => {
 //   const listener = app.listen(process.env.PORT || 8080, () => {
