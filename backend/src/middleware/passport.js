@@ -1,6 +1,6 @@
 // Author: Anuj Dev (B00900887)
 
-const { users } = require("../models");
+// const { users } = require("../models");
 const { JWT_SECRET } = require("../config");
 const { Strategy, ExtractJwt } = require("passport-jwt");
 
