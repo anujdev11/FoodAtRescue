@@ -14,6 +14,7 @@ import axios from 'axios';
 import axios_api from '../../common/axios';
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/userContext";
+import Food from "../../assets/images/postFood.jpeg";
 
 const { Title } = Typography;
 
@@ -51,25 +52,6 @@ const AddFood = () => {
         const value = e.target.value;
         setFormValues({ ...formValues, [name]: value });
     };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     setFormErrors(validate(formValues));
-    //     setFormValues(formValues);
-    //     setIsSubmit(true);
-
-    //     axios_api.post("/food/addFood", formValues).then((response) => {
-    //         if ((response.data.success = true)) {
-    //             toast.success(response?.data?.message);
-    //             //reset();
-    //             navigate(ROUTES.FOOD_LISTING);
-    //             // bookingStatus();
-    //         }
-    //     })
-    //         .catch((err) => {
-    //             toast.error(err?.response?.data?.message || "Something went wrong");
-    //         });
-    // }
 
     const handleClick = (e) => {
         if (!authenticated) {
@@ -114,6 +96,14 @@ const AddFood = () => {
     return (
         <div>
             <NavigationBar />
+            <img src={Food} width="100%" height="350px" />
+            <Box textAlign="center" sx={{
+                marginTop: "20px"
+            }}>
+                <Title level={1} className="title">
+                    Add Food Details
+                </Title>
+            </Box>
             <Paper
                 elevation={3}
                 sx={{
@@ -123,6 +113,7 @@ const AddFood = () => {
                     marginRight: "auto"
                 }}
             >
+
                 <Box
                     textAlign="center"
                     component="form"
@@ -133,18 +124,14 @@ const AddFood = () => {
                         justifyContent: "center",
                         marginLeft: "auto",
                         marginRight: "auto",
-                        marginTop: "50px",
+                        marginTop: "20px",
                         marginBottom: "50px"
                     }}
                     noValidate
                     autoComplete="off"
                 >
                     <div>
-                        <Title level={1} className="title" sx={{
-                            marginTop: "100px"
-                        }}>
-                            Add Food Details
-                        </Title>
+
                         <TextField
                             fullWidth
                             required
