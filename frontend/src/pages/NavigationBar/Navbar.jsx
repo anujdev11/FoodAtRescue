@@ -24,12 +24,12 @@ const settings = ["Profile", "Change Password", "Logout"];
 
 const Navbar = () => {
   const {
-    state: { authenticated, currentUser },
+    state: { authenticated, currentUser, role },
   } = useContext(AppContext);
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  //console.log(role);
   const handleOpenNavMenu = (event) => {
     console.log(event);
     setAnchorElNav(event.currentTarget);
@@ -98,35 +98,82 @@ const Navbar = () => {
                 display: { xs: "block", md: "none", color: "black" },
               }}
             >
-              <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
-                <Typography textAlign="center">View Availabe Food</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate(ROUTES.VIEW_SERVICES)}>
-                <Typography textAlign="center">Your Reserved Food</Typography>
-              </MenuItem>
+              {(role == 'food_owner') ? (
+                <>
+                  {/* my posting */}
+                  <MenuItem onClick={() => navigate()}>
+                    <Typography textAlign="center">View My Posting</Typography>
+                  </MenuItem>
+                  {/* my resrvation */}
+                  <MenuItem onClick={() => navigate()}>
+                    <Typography textAlign="center">View Reservation</Typography>
+                  </MenuItem>
+                </>
+
+              ) : (
+                <>
+                  <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
+                    <Typography textAlign="center">View Availabe Food</Typography>
+                  </MenuItem>
+                  {/* Reserved Food */}
+                  <MenuItem onClick={() => navigate()}>
+                    <Typography textAlign="center">Your Reserved Food</Typography>
+                  </MenuItem>
+                </>
+              )}
+
             </Menu>
           </Box>
           <Box noWrap sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <img height={40} width={80} src={Logo} alt="logo" />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              //onClick={handleClick}
-              onClick={() => navigate(ROUTES.FOOD_LISTING)}
-              sx={{ my: 2, color: "black", display: "block" }}
-            >
-              View Availabe Food
-            </Button>
-            <Button
-              onClick={() => navigate(ROUTES.VIEW_SERVICES)}
-              sx={{ my: 2, color: "black", display: "block" }}
-            >
-              Your Reserved Food
-            </Button>
+            {(role == 'food_owner') ? (
+              <>
+                {/* my posting */}
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  //onClick={handleClick}
+                  onClick={() => navigate()}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  View My Posting
+                </Button>
+                {/* my resrvation */}
+                <Button
+                  onClick={() => navigate()}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  View Reservation
+                </Button>
+              </>
+
+            ) : (
+              <>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  //onClick={handleClick}
+                  onClick={() => navigate(ROUTES.FOOD_LISTING)}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  View Availabe Food
+                </Button>
+                {/* Reserved Food */}
+                <Button
+                  onClick={() => navigate()}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  Your Reserved Food
+                </Button>
+              </>
+            )}
+
           </Box>
           <Box
             display="flex"
@@ -135,18 +182,24 @@ const Navbar = () => {
             // width={225}
             sx={{ flexGrow: 0 }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                marginRight: 2,
-                backgroundColor: "primary.main",
-                alignItems: "right",
-                display: { xs: "none", md: "flex" },
-              }}
-              onClick={() => navigate(ROUTES.POST_FOOD)}
-            >
-              Post Ad
-            </Button>
+            {(role == 'food_owner') ? (
+              /* post ad */
+              <Button
+                variant="contained"
+                sx={{
+                  marginRight: 2,
+                  backgroundColor: "primary.main",
+                  alignItems: "right",
+                  display: { xs: "none", md: "flex" },
+                }}
+                onClick={() => navigate(ROUTES.POST_FOOD)}
+              >
+                Post Food
+              </Button>
+            ) : (
+              <>
+              </>
+            )}
             {authenticated ? (
               <Settings />
             ) : (

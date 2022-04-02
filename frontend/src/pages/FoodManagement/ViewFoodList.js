@@ -53,7 +53,7 @@ const ViewFoodList = () => {
 
             const newFood = { ...food, status: "Reserved" }
 
-            await axios_api.put(`food/updateFood/${foodId}`, newFood).then((response) => {
+            await axios_api.put(`/food/updateFood/${foodId}`, newFood).then((response) => {
                 if ((response.data.success = true)) {
                     //toast.success(response?.data?.message);
                     //reset();
@@ -110,8 +110,8 @@ const ViewFoodList = () => {
                                                 {food.pickUpLocation}
                                             </Typography>
                                             <Chip label={food.type} variant="outlined" sx={{ mt: '10px', mr: '10px' }} />
-                                            <Chip label={`Servings: ${food.servings}`} variant="outlined" />
-
+                                            <Chip label={`Servings: ${food.servings}`} variant="outlined" sx={{ mt: '10px' }} />
+                                            <br />
                                             {(food.status !== "Available") ? (
                                                 <Button
                                                     disabled
