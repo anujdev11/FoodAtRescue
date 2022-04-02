@@ -15,6 +15,7 @@ import Signup from "../pages/UserManagement/Signup/Signup";
 import SignupFoodOwner from "../pages/UserManagement/Signup/SignupFoodOwner";
 import Logout from "../Components/Logout";
 import HomePage from "../pages/HomePage/index";
+import AddFood from "../pages/PostFood/AddFood";
 
 function Routing() {
   const { initializeAuth, dispatch } = useContext(AppContext);
@@ -44,6 +45,10 @@ function Routing() {
       pageLink: ROUTES.ERROR,
       view: Error,
     },
+    {
+      pageLink: ROUTES.POST_FOOD,
+      view: AddFood,
+    }
   ];
 
   useEffect(() => {
