@@ -7,6 +7,7 @@ export const ROUTES = {
   LOGIN: "/login",
   SIGNUP: "/signup",
   SIGNUP_FOOD_OWNER: "/signupFoodOwner",
+  FOOD_LISTING: "/food_list",
   LOGOUT: "/logout",
   NOT_FOUND: "*",
   ERROR: "/error",
