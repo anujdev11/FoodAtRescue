@@ -14,6 +14,7 @@ import Login from "../pages/UserManagement/Login/Login";
 import Signup from "../pages/UserManagement/Signup/Signup";
 import SignupFoodOwner from "../pages/UserManagement/Signup/SignupFoodOwner";
 import Logout from "../Components/Logout";
+import ViewFoodList from "../pages/FoodManagement/ViewFoodList";
 import HomePage from "../pages/HomePage/index";
 import AddFood from "../pages/PostFood/AddFood";
 
@@ -40,6 +41,10 @@ function Routing() {
     {
       pageLink: ROUTES.LOGOUT,
       view: Logout,
+    },
+    {
+      pageLink: ROUTES.FOOD_LISTING,
+      view: ViewFoodList,
     },
     {
       pageLink: ROUTES.ERROR,

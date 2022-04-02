@@ -98,7 +98,7 @@ const Navbar = () => {
                 display: { xs: "block", md: "none", color: "black" },
               }}
             >
-              <MenuItem onClick={() => navigate(ROUTES.PROPERTY_LISTING)}>
+              <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
                 <Typography textAlign="center">View Availabe Food</Typography>
               </MenuItem>
               <MenuItem onClick={() => navigate(ROUTES.VIEW_SERVICES)}>
@@ -115,8 +115,8 @@ const Navbar = () => {
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-              // onClick={() => navigate(ROUTES.PROPERTY_LISTING)}
+              //onClick={handleClick}
+              onClick={() => navigate(ROUTES.FOOD_LISTING)}
               sx={{ my: 2, color: "black", display: "block" }}
             >
               View Availabe Food
@@ -143,7 +143,7 @@ const Navbar = () => {
                 alignItems: "right",
                 display: { xs: "none", md: "flex" },
               }}
-              onClick={() => navigate(ROUTES.ADD_PROPERTY)}
+              onClick={() => navigate(ROUTES.POST_FOOD)}
             >
               Post Ad
             </Button>

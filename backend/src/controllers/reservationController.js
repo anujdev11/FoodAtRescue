@@ -39,7 +39,7 @@ const addReservation = async (req, res) => {
             Item: Item,
         };
         await dynamoClient.put(params).promise().then(() => {
-            return res.status(201).json({ message: "Reservation Details Added Successfully", success: true });
+            return res.status(201).json({ message: "Reservation is Successfull!!", success: true });
         });
     } catch (error) {
         return res.status(500).json({ error: error.message, message: "Unable to Add Details!!", success: false });

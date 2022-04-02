@@ -1,7 +1,7 @@
 import React from 'react';
 import NavigationBar from "../NavigationBar/Navbar";
 import Footer from "../Footer/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormControl, Select } from '@mui/material';
 import { TextField, Box, Paper } from "@mui/material";
@@ -10,30 +10,34 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { Typography } from "antd";
 import { ROUTES } from '../../common/constants';
-
+import axios from 'axios';
+import axios_api from '../../common/axios';
+import { toast } from "react-toastify";
+import { AppContext } from "../../context/userContext";
 
 const { Title } = Typography;
 
-function AddFood() {
+const AddFood = () => {
     const values = {
         name: "",
         type: "",
         servings: "",
         pickUpLocation: "",
+        status: "Available",
+        imageURL: "",
+        ownerId: "101"
     };
 
     const [formErrors, setFormErrors] = useState(values);
     const [formValues, setFormValues] = useState(values);
     const [isSubmit, setIsSubmit] = useState(false);
-    const [api_url, setAPIUrl] = useState('http://localhost:3000/addFood');
-
-    // const foodType = [
-    //     { value:"vegetarian", label:"Vegetarian" },
-    //     { value: "nonVegetarian", label: "Non-Vegetarian" },
-    //     { value: "vegan", label: "Vegan"},
-    // ]
 
     const navigate = useNavigate();
+
+    const {
+        state: { userId, authenticated },
+        dispatch,
+    } = useContext(AppContext);
 
     useEffect(() => {
 
@@ -48,24 +52,39 @@ function AddFood() {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormErrors(validate(formValues));
-        setFormValues(formValues);
-        setIsSubmit(true);
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setFormErrors(validate(formValues));
+    //     setFormValues(formValues);
+    //     setIsSubmit(true);
 
-        fetch(api_url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                formValues
-            }),
-        })
-            .then((res) => res.json())
-            .then((result) => setFormValues(result.rows))
-            .catch((formErrors) => console.log('error'))
+    //     axios_api.post("/food/addFood", formValues).then((response) => {
+    //         if ((response.data.success = true)) {
+    //             toast.success(response?.data?.message);
+    //             //reset();
+    //             navigate(ROUTES.FOOD_LISTING);
+    //             // bookingStatus();
+    //         }
+    //     })
+    //         .catch((err) => {
+    //             toast.error(err?.response?.data?.message || "Something went wrong");
+    //         });
+    // }
+
+    const handleClick = (e) => {
+        if (!authenticated) {
+            toast.error("You need to login first!!!");
+            navigate(ROUTES.LOGIN);
+        } else {
+            e.preventDefault();
+            setFormErrors(validate(formValues));
+            setFormValues(formValues);
+            setIsSubmit(true);
+            axios_api.post("/food/addFood", formValues)
+                .then((res) => res.json())
+                .then((result) => setFormValues(result.rows))
+                .catch((formErrors) => console.log('error'))
+        }
 
     };
 
@@ -121,10 +140,11 @@ function AddFood() {
                     autoComplete="off"
                 >
                     <div>
-                        <Title level={1} className="title">
+                        <Title level={1} className="title" sx={{
+                            marginTop: "100px"
+                        }}>
                             Add Food Details
                         </Title>
-                        {/* <label> Food Name </label> */}
                         <TextField
                             fullWidth
                             required
@@ -157,7 +177,7 @@ function AddFood() {
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
-                                <MenuItem value="Vegetarian}">Vegetarian</MenuItem>
+                                <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                                 <MenuItem value="Non-Vegetarian">Non-Vegetarian</MenuItem>
                                 <MenuItem value="Vegan">Vegan</MenuItem>
                             </Select>
@@ -188,83 +208,6 @@ function AddFood() {
                             error={!!formErrors.pickUpLocation}
                             helperText={formErrors.pickUpLocation ? formErrors.pickUpLocation : ""}
                         />
-                        {/* <TextField
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            name="apartmentNumber"
-                            label="Apartment No."
-                            placeholder="Enter Apartment No."
-                            margin="normal"
-                            value={formValues.apartmentNumber}
-                            onChange={handleChange}
-                            error={!!formErrors.apartmentNumber}
-                            helperText={formErrors.apartmentNumber ? formErrors.apartmentNumber : ""}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            name="city"
-                            label="City"
-                            placeholder="Enter City"
-                            margin="normal"
-                            value={formValues.city}
-                            onChange={handleChange}
-                            error={!!formErrors.city}
-                            helperText={formErrors.city ? formErrors.city : ""}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            name="province"
-                            label="Province"
-                            placeholder="Enter Province"
-                            margin="normal"
-                            value={formValues.province}
-                            onChange={handleChange}
-                            error={!!formErrors.province}
-                            helperText={formErrors.province ? formErrors.province : ""}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            name="postal"
-                            label="Postal Code"
-                            placeholder="Enter Postal Code"
-                            margin="normal"
-                            value={formValues.postal}
-                            onChange={handleChange}
-                            error={!!formErrors.postal}
-                            helperText={formErrors.postal ? formErrors.postal : ""}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            name="number"
-                            label="Phone Number"
-                            placeholder="Enter Phone Number"
-                            margin="normal"
-                            value={formValues.number}
-                            onChange={handleChange}
-                            error={!!formErrors.number}
-                            helperText={formErrors.number ? formErrors.number : ""}
-                        />
-                        <TextField
-                            fullWidth
-                            id="outlined-multiline-static"
-                            name="instructions"
-                            label="Instructions for Delivery"
-                            multiline
-                            rows={4}
-                            placeholder="Enter Descriptions"
-                            margin="normal"
-                            value={formValues.instructions}
-                            onChange={handleChange}
-                        /> */}
 
                     </div>
                     <div>
@@ -273,14 +216,10 @@ function AddFood() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={handleSubmit}
+                            onClick={handleClick}
                         >
                             Post Food
                         </Button>
-                        {/* <AppButton color="secondary"
-                            onClick={handleSubmit} >
-                            Submit
-                        </AppButton> */}
                     </div>
                 </Box>
             </Paper>
