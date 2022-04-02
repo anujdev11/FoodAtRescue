@@ -98,17 +98,7 @@ const Navbar = () => {
                 display: { xs: "block", md: "none", color: "black" },
               }}
             >
-              {(role == 'app_user') ? (
-                <>
-                  <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
-                    <Typography textAlign="center">View Availabe Food</Typography>
-                  </MenuItem>
-                  {/* Reserved Food */}
-                  <MenuItem onClick={() => navigate()}>
-                    <Typography textAlign="center">Your Reserved Food</Typography>
-                  </MenuItem>
-                </>
-              ) : (
+              {(role == 'food_owner') ? (
                 <>
                   {/* my posting */}
                   <MenuItem onClick={() => navigate()}>
@@ -119,6 +109,17 @@ const Navbar = () => {
                     <Typography textAlign="center">View Reservation</Typography>
                   </MenuItem>
                 </>
+
+              ) : (
+                <>
+                  <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
+                    <Typography textAlign="center">View Availabe Food</Typography>
+                  </MenuItem>
+                  {/* Reserved Food */}
+                  <MenuItem onClick={() => navigate()}>
+                    <Typography textAlign="center">Your Reserved Food</Typography>
+                  </MenuItem>
+                </>
               )}
 
             </Menu>
@@ -127,28 +128,7 @@ const Navbar = () => {
             <img height={40} width={80} src={Logo} alt="logo" />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {(role == 'app_user') ? (
-              <>
-                <Button
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  //onClick={handleClick}
-                  onClick={() => navigate(ROUTES.FOOD_LISTING)}
-                  sx={{ my: 2, color: "black", display: "block" }}
-                >
-                  View Availabe Food
-                </Button>
-                {/* Reserved Food */}
-                <Button
-                  onClick={() => navigate()}
-                  sx={{ my: 2, color: "black", display: "block" }}
-                >
-                  Your Reserved Food
-                </Button>
-              </>
-            ) : (
+            {(role == 'food_owner') ? (
               <>
                 {/* my posting */}
                 <Button
@@ -168,6 +148,28 @@ const Navbar = () => {
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   View Reservation
+                </Button>
+              </>
+
+            ) : (
+              <>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  //onClick={handleClick}
+                  onClick={() => navigate(ROUTES.FOOD_LISTING)}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  View Availabe Food
+                </Button>
+                {/* Reserved Food */}
+                <Button
+                  onClick={() => navigate()}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  Your Reserved Food
                 </Button>
               </>
             )}
