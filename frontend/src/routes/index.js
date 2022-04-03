@@ -22,7 +22,7 @@ import ViewReservation from "../pages/FoodManagement/ViewReservation";
 import AddFood from "../pages/PostFood/AddFood";
 
 function Routing() {
-  const { initializeAuth, dispatch } = useContext(AppContext);
+  const { initializeAuth } = useContext(AppContext);
   const location = useLocation();
   const openPages = [
     {
@@ -71,19 +71,19 @@ function Routing() {
     }
   ];
 
-  useEffect(() => {
-    initializeAuth();
-    if (localStorage.getItem(TOKEN)) {
-      const token = localStorage.getItem(TOKEN);
-      const decoded = jwtDecode(token);
-      const expiresAt = decoded.exp;
-      const currentTime = Date.now();
+  // useEffect(() => {
+  //   initializeAuth();
+  //   if (localStorage.getItem(TOKEN)) {
+  //     const token = localStorage.getItem(TOKEN);
+  //     const decoded = jwtDecode(token);
+  //     const expiresAt = decoded.exp;
+  //     const currentTime = Date.now();
 
-      if (expiresAt < currentTime / 1000) {
-        dispatch({ type: ActionTypes.LOGOUT });
-      }
-    }
-  }, []);
+  //     // if (expiresAt < currentTime / 1000) {
+  //     //   dispatch({ type: ActionTypes.LOGOUT });
+  //     // }
+  //   }
+  // }, []);
 
   const routes = (
     <Routes location={location}>

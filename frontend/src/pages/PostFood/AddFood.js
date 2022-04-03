@@ -42,7 +42,6 @@ const AddFood = () => {
 
     const {
         state: { userId, authenticated },
-        dispatch,
     } = useContext(AppContext);
 
     // useEffect(() => {
@@ -84,9 +83,10 @@ const AddFood = () => {
                         axios_api.post("/food/addFood", post)
                             .then((res) => res.json())
                             .then((result) => setFormValues(result.rows))
-                            .catch((formErrors) => console.log('error'))
+                            .catch((formErrors) => console.log('error'));
 
-                        navigate(ROUTES.VIEW_MY_POSTING);
+                        toast.success("Post Added successfully");
+                        navigate(ROUTES.HOMEPAGE);
 
                     }).catch((err) => {
                         console.log(err?.response?.data?.message);
@@ -98,7 +98,7 @@ const AddFood = () => {
                     .then((result) => setFormValues(result.rows))
                     .catch((formErrors) => console.log('error'))
 
-                navigate(ROUTES.VIEW_MY_POSTING);
+                navigate(ROUTES.HOMEPAGE);
             }
         }
 

@@ -13,7 +13,6 @@ const ViewFoodList = () => {
     const [foods, setFoods] = useState(null)
     const {
         state: { userId, authenticated },
-        dispatch,
     } = useContext(AppContext);
 
 
@@ -35,7 +34,7 @@ const ViewFoodList = () => {
             navigate(ROUTES.LOGIN);
         } else {
             const newFood = { ...food, foodStatus: "Reserved", customerId: userId }
-
+            //console.log(newFood)
 
             await axios_api.put(`/food/updateFood/${foodId}`, newFood).then((response) => {
                 if ((response.data.success = true)) {

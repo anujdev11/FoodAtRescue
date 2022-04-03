@@ -13,11 +13,11 @@ const ViewReservedFood = () => {
     const [foods, setFoods] = useState(null)
     const {
         state: { userId, authenticated },
-        dispatch,
     } = useContext(AppContext);
 
 
     useEffect(async () => {
+        console.log(authenticated)
         if (!authenticated) {
             toast.error("You need to Login first!!!");
             navigate(ROUTES.LOGIN);

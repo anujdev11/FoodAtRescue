@@ -37,11 +37,6 @@ const Login = () => {
     reset,
     trigger,
   } = useForm();
-  // useEffect(() => {
-  //   if (authenticated) {
-  //     navigate(ROUTES.HOMEPAGE);
-  //   }
-  // }, [authenticated]);
   const onSubmit = (data) => {
     const { email, password } = data;
     const user = new CognitoUser({
