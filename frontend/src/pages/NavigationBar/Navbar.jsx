@@ -189,9 +189,9 @@ const Navbar = () => {
                   alignItems: "right",
                   display: { xs: "none", md: "flex" },
                 }}
-                onClick={() => navigate(ROUTES.ADD_PROPERTY)}
+                onClick={() => navigate(ROUTES.POST_FOOD)}
               >
-                Post Ad
+                Post Food
               </Button>
             ) : (
               <>

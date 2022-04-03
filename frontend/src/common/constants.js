@@ -14,6 +14,7 @@ export const ROUTES = {
   LOGOUT: "/logout",
   NOT_FOUND: "*",
   ERROR: "/error",
+  POST_FOOD: "/addFood",
 };
 
 /* Authentication */

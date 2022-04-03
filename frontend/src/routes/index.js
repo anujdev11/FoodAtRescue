@@ -19,6 +19,7 @@ import HomePage from "../pages/HomePage/index";
 import ViewReservedFood from "../pages/FoodManagement/ViewReservedFood";
 import ViewMyPosting from "../pages/FoodManagement/ViewMyPosting";
 import ViewReservation from "../pages/FoodManagement/ViewReservation";
+import AddFood from "../pages/PostFood/AddFood";
 
 function Routing() {
   const { initializeAuth, dispatch } = useContext(AppContext);
@@ -64,6 +65,10 @@ function Routing() {
       pageLink: ROUTES.ERROR,
       view: Error,
     },
+    {
+      pageLink: ROUTES.POST_FOOD,
+      view: AddFood,
+    }
   ];
 
   useEffect(() => {
