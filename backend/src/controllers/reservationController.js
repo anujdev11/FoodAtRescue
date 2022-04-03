@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 const uuid = require("uuid")
 //const client = require("../../dynamoDBConnection");
 
-const { DYNAMO_REGION, DYNAMO_KEY, DYNAMO_SECRET_KEY } = require('../../src/config/index');
+const { DYNAMO_REGION, DYNAMO_KEY, DYNAMO_SECRET_KEY } = require('../config/index');
 
 AWS.config.update({
     region: DYNAMO_REGION,
