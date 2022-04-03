@@ -16,6 +16,9 @@ import SignupFoodOwner from "../pages/UserManagement/Signup/SignupFoodOwner";
 import Logout from "../Components/Logout";
 import ViewFoodList from "../pages/FoodManagement/ViewFoodList";
 import HomePage from "../pages/HomePage/index";
+import ViewReservedFood from "../pages/FoodManagement/ViewReservedFood";
+import ViewMyPosting from "../pages/FoodManagement/ViewMyPosting";
+import ViewReservation from "../pages/FoodManagement/ViewReservation";
 
 function Routing() {
   const { initializeAuth, dispatch } = useContext(AppContext);
@@ -44,6 +47,18 @@ function Routing() {
     {
       pageLink: ROUTES.FOOD_LISTING,
       view: ViewFoodList,
+    },
+    {
+      pageLink: ROUTES.RESERVED_FOOD,
+      view: ViewReservedFood,
+    },
+    {
+      pageLink: ROUTES.VIEW_MY_POSTING,
+      view: ViewMyPosting,
+    },
+    {
+      pageLink: ROUTES.VIEW_RESERVATION,
+      view: ViewReservation,
     },
     {
       pageLink: ROUTES.ERROR,

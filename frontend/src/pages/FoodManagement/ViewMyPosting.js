@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../../context/userContext";
 import { ROUTES } from '../../common/constants';
 
-const ViewFoodList = () => {
+const ViewMyPosting = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState(null)
     const {
@@ -18,47 +18,45 @@ const ViewFoodList = () => {
 
 
     useEffect(async () => {
-        await axios_api.get("/food/getAllFood")
-            .then(response => {
-                if (response.data.success) {
-                    setFoods(response.data.data.Items);
-                }
-
-            }).catch((err) => {
-                setFoods([])
-            })
-    }, [])
-
-    const handleClick = async (foodId, ownerId, food) => {
         if (!authenticated) {
-            toast.error("You need to login first!!!");
+            toast.error("You need to Login first!!!");
             navigate(ROUTES.LOGIN);
         } else {
-            const newFood = { ...food, foodStatus: "Reserved", customerId: userId }
+            await axios_api.get(`/food/getMyPosting/${userId}`)
+                .then(response => {
+                    if (response.data.success) {
+                        setFoods(response.data.data.Items);
+                    }
 
-
-            await axios_api.put(`/food/updateFood/${foodId}`, newFood).then((response) => {
-                if ((response.data.success = true)) {
-                    toast.success("Booking Successfull!!!");
-                    //reset();
-                    //navigate(ROUTES.HOMEPAGE);
-                    bookingStatus();
-                }
-            })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message || "Something went wrong");
-                });
+                }).catch((err) => {
+                    setFoods([])
+                })
         }
-    };
+    }, [])
 
     const bookingStatus = () => {
-        axios_api.get("/food/getAllFood").then(response => {
+        axios_api.get(`/food/getMyPosting/${userId}`).then(response => {
             if (response.data.success) {
                 setFoods(response.data.data.Items);
             }
         }).catch((err) => {
             setFoods([])
         })
+    };
+
+    const handleDelete = async (foodId) => {
+        await axios_api.delete(`/food/deleteFood/${foodId}`)
+            .then(response => {
+                if (response.data.success) {
+                    //console.log(response.data.message);
+                    toast.success(response?.data?.message);
+                    bookingStatus();
+                }
+
+            }).catch((err) => {
+                //console.log(err.response.data.error);
+                toast.error(err?.response?.data?.message || "Something went wrong")
+            })
     };
 
     return (
@@ -95,37 +93,32 @@ const ViewFoodList = () => {
                                             <Chip label={food.type} variant="outlined" sx={{ mt: '10px', mr: '10px' }} />
                                             <Chip label={`Servings: ${food.servings}`} variant="outlined" sx={{ mt: '10px' }} />
                                             <br />
-                                            {(food.foodStatus !== "Available") ? (
-                                                <Button
-                                                    disabled
-                                                    variant="contained"
-                                                    sx={{
-                                                        marginTop: 2,
-                                                        backgroundColor: "primary.main",
-                                                        //alignItems: "right",
-                                                        //display: { xs: "none", md: "flex" },
-                                                    }}
-                                                    onClick={() => handleClick(food.id, food.ownerId, food)}
-                                                >
-                                                    Book Food
-                                                </Button>
-                                            ) : (
-                                                <Button
-                                                    variant="contained"
-                                                    sx={{
-                                                        marginTop: 2,
-                                                        backgroundColor: "primary.main",
-                                                        //alignItems: "right",
-                                                        //display: { xs: "none", md: "flex" },
-                                                    }}
-                                                    onClick={() => handleClick(food.id, food.ownerId, food)}
-                                                >
-                                                    Book Food
-                                                </Button>
-                                            )}
-                                            <Typography variant="body2" marginTop="5px" color="text.secondary" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-                                                Food  is {food.foodStatus}
-                                            </Typography>
+                                            <Button
+                                                variant="contained"
+                                                sx={{
+                                                    marginTop: 2,
+                                                    marginRight: 3,
+                                                    backgroundColor: "primary.main",
+                                                    //alignItems: "right",
+                                                    //display: { xs: "none", md: "flex" },
+                                                }}
+                                                onClick={() => { }}
+                                            >
+                                                Update
+                                            </Button>
+
+                                            <Button
+                                                variant="contained"
+                                                sx={{
+                                                    marginTop: 2,
+                                                    backgroundColor: "#DA344D",
+                                                    //alignItems: "right",
+                                                    //display: { xs: "none", md: "flex" },
+                                                }}
+                                                onClick={() => handleDelete(food.id)}
+                                            >
+                                                Delete
+                                            </Button>
                                         </CardContent>
                                     </Card>
                                 </Grid>
@@ -142,4 +135,4 @@ const ViewFoodList = () => {
     )
 }
 
-export default ViewFoodList
+export default ViewMyPosting

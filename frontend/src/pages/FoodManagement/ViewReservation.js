@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../../context/userContext";
 import { ROUTES } from '../../common/constants';
 
-const ViewFoodList = () => {
+const ViewReservation = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState(null)
     const {
@@ -18,41 +18,41 @@ const ViewFoodList = () => {
 
 
     useEffect(async () => {
-        await axios_api.get("/food/getAllFood")
+        if (!authenticated) {
+            toast.error("You need to Login first!!!");
+            navigate(ROUTES.LOGIN);
+        } else {
+            await axios_api.get(`/food/getReservation/${userId}`)
+                .then(response => {
+                    if (response.data.success) {
+                        setFoods(response.data.data.Items);
+                    }
+
+                }).catch((err) => {
+                    setFoods([])
+                })
+        }
+    }, [])
+
+    const handleApprove = async (foodId, food) => {
+
+        const newFood = { ...food, foodStatus: "Not Available", bookingStatus: "Approved" }
+        await axios_api.put(`/food/updateFood/${foodId}`, newFood)
             .then(response => {
                 if (response.data.success) {
-                    setFoods(response.data.data.Items);
+                    //console.log(response.data.message);
+                    toast.success("Successfully Approved the Request");
+                    bookingStatus();
                 }
 
             }).catch((err) => {
-                setFoods([])
+                //console.log(err.response.data.error);
+                toast.error(err?.response?.data?.message || "Something went wrong")
             })
-    }, [])
-
-    const handleClick = async (foodId, ownerId, food) => {
-        if (!authenticated) {
-            toast.error("You need to login first!!!");
-            navigate(ROUTES.LOGIN);
-        } else {
-            const newFood = { ...food, foodStatus: "Reserved", customerId: userId }
-
-
-            await axios_api.put(`/food/updateFood/${foodId}`, newFood).then((response) => {
-                if ((response.data.success = true)) {
-                    toast.success("Booking Successfull!!!");
-                    //reset();
-                    //navigate(ROUTES.HOMEPAGE);
-                    bookingStatus();
-                }
-            })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message || "Something went wrong");
-                });
-        }
     };
 
     const bookingStatus = () => {
-        axios_api.get("/food/getAllFood").then(response => {
+        axios_api.get(`/food/getReservation/${userId}`).then(response => {
             if (response.data.success) {
                 setFoods(response.data.data.Items);
             }
@@ -60,7 +60,6 @@ const ViewFoodList = () => {
             setFoods([])
         })
     };
-
     return (
         <>
             <NavigationBar />
@@ -95,37 +94,21 @@ const ViewFoodList = () => {
                                             <Chip label={food.type} variant="outlined" sx={{ mt: '10px', mr: '10px' }} />
                                             <Chip label={`Servings: ${food.servings}`} variant="outlined" sx={{ mt: '10px' }} />
                                             <br />
-                                            {(food.foodStatus !== "Available") ? (
-                                                <Button
-                                                    disabled
-                                                    variant="contained"
-                                                    sx={{
-                                                        marginTop: 2,
-                                                        backgroundColor: "primary.main",
-                                                        //alignItems: "right",
-                                                        //display: { xs: "none", md: "flex" },
-                                                    }}
-                                                    onClick={() => handleClick(food.id, food.ownerId, food)}
-                                                >
-                                                    Book Food
-                                                </Button>
-                                            ) : (
-                                                <Button
-                                                    variant="contained"
-                                                    sx={{
-                                                        marginTop: 2,
-                                                        backgroundColor: "primary.main",
-                                                        //alignItems: "right",
-                                                        //display: { xs: "none", md: "flex" },
-                                                    }}
-                                                    onClick={() => handleClick(food.id, food.ownerId, food)}
-                                                >
-                                                    Book Food
-                                                </Button>
-                                            )}
-                                            <Typography variant="body2" marginTop="5px" color="text.secondary" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-                                                Food  is {food.foodStatus}
+                                            <Typography variant="body2" color="text.secondary" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+                                                Food seeker: {food.customerId}
                                             </Typography>
+                                            <Button
+                                                variant="contained"
+                                                sx={{
+                                                    marginTop: 2,
+                                                    backgroundColor: "primary.main",
+                                                    //alignItems: "right",
+                                                    //display: { xs: "none", md: "flex" },
+                                                }}
+                                                onClick={() => handleApprove(food.id, food)}
+                                            >
+                                                Approve
+                                            </Button>
                                         </CardContent>
                                     </Card>
                                 </Grid>
@@ -142,4 +125,4 @@ const ViewFoodList = () => {
     )
 }
 
-export default ViewFoodList
+export default ViewReservation

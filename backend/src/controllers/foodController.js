@@ -140,4 +140,123 @@ const updateFood = async (req, res) => {
     }
 };
 
-module.exports = { getAllFood, addFood, deleteFood, getFood, updateFood };
+const getMyFood = async (req, res) => {
+    try {
+        const customerId = req.params.customerId;
+        const params = {
+            TableName: TABLE_NAME,
+            //KeyConditionExpression: "",
+            //ProjectionExpression: 'customerId,ownerId,',
+            FilterExpression: "customerId = :customerId ",
+            ExpressionAttributeValues: {
+                ":customerId": customerId,
+            }
+        };
+        const myFood = await dynamoClient.scan(params).promise();
+
+        const count = Object.keys(myFood).length;
+        if (count == 0) {
+            res.status(404).json({
+                message: "No Reservation Details Available",
+                success: false
+            })
+        } else {
+            res.status(200).json({
+                message: "Reservation Details Retrieved Successfully",
+                success: true,
+                data: myFood
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error!!",
+            success: false,
+            error: error.message
+        })
+    }
+};
+
+const getMyPosting = async (req, res) => {
+    try {
+        const ownerId = req.params.ownerId;
+        const params = {
+            TableName: TABLE_NAME,
+            //KeyConditionExpression: "",
+            //ProjectionExpression: 'customerId,ownerId,',
+            FilterExpression: "ownerId = :ownerId ",
+            ExpressionAttributeValues: {
+                ":ownerId": ownerId,
+            }
+        };
+        const myFood = await dynamoClient.scan(params).promise();
+        //console.log(myFood);
+
+        //const item = JSON.stringify(Reservation)
+        //const { Items } = Reservation;
+        //console.log(Reservation.Item.id);
+
+        const count = Object.keys(myFood).length;
+        if (count == 0) {
+            res.status(404).json({
+                message: "No post Details Available",
+                success: false
+            })
+        } else {
+            res.status(200).json({
+                message: "Post Details Retrieved Successfully",
+                success: true,
+                data: myFood
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error!!",
+            success: false,
+            error: error.message
+        })
+    }
+};
+
+const getReservation = async (req, res) => {
+    try {
+        const ownerId = req.params.ownerId;
+        const params = {
+            TableName: TABLE_NAME,
+            //KeyConditionExpression: "",
+            //ProjectionExpression: 'customerId,ownerId,',
+            FilterExpression: "ownerId = :ownerId AND foodStatus = :foodStatus",
+            ExpressionAttributeValues: {
+                ":ownerId": ownerId,
+                ":foodStatus": "Reserved",
+            }
+        };
+        const myFood = await dynamoClient.scan(params).promise();
+        //console.log(myFood);
+
+        //const item = JSON.stringify(Reservation)
+        //const { Items } = Reservation;
+        //console.log(Reservation.Item.id);
+
+        const count = Object.keys(myFood).length;
+        if (count == 0) {
+            res.status(404).json({
+                message: "No post Details Available",
+                success: false
+            })
+        } else {
+            res.status(200).json({
+                message: "Post Details Retrieved Successfully",
+                success: true,
+                data: myFood
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error!!",
+            success: false,
+            error: error.message
+        })
+    }
+};
+
+module.exports = { getAllFood, addFood, deleteFood, getFood, updateFood, getMyFood, getMyPosting, getReservation };

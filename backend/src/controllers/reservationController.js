@@ -140,5 +140,44 @@ const updateReservation = async (req, res) => {
     }
 };
 
+const getMyReservation = async (req, res) => {
+    try {
+        const customerId = req.params.customerId;
+        const params = {
+            TableName: TABLE_NAME,
+            //KeyConditionExpression: "",
+            //ProjectionExpression: 'customerId,ownerId,',
+            FilterExpression: "customerId = :customerId ",
+            ExpressionAttributeValues: {
+                ":customerId": customerId,
+            }
+        };
+        const myReservation = await dynamoClient.scan(params).promise();
+        console.log(myReservation);
 
-module.exports = { getAllReservation, addReservation, deleteReservation, getReservation, updateReservation };
+        //const item = JSON.stringify(Reservation)
+        //const { Items } = Reservation;
+        //console.log(Reservation.Item.id);
+
+        const count = Object.keys(myReservation).length;
+        if (count == 0) {
+            res.status(404).json({
+                message: "No Reservation Details Available",
+                success: false
+            })
+        } else {
+            res.status(200).json({
+                message: "Reservation Details Retrieved Successfully",
+                success: true,
+                data: myReservation
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error!!",
+            success: false,
+            error: error.message
+        })
+    }
+};
+module.exports = { getAllReservation, addReservation, deleteReservation, getReservation, updateReservation, getMyReservation };

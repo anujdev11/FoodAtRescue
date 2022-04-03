@@ -101,22 +101,20 @@ const Navbar = () => {
               {(role == 'food_owner') ? (
                 <>
                   {/* my posting */}
-                  <MenuItem onClick={() => navigate()}>
+                  <MenuItem onClick={() => navigate(ROUTES.VIEW_MY_POSTING)}>
                     <Typography textAlign="center">View My Posting</Typography>
                   </MenuItem>
                   {/* my resrvation */}
-                  <MenuItem onClick={() => navigate()}>
+                  <MenuItem onClick={() => navigate(ROUTES.VIEW_RESERVATION)}>
                     <Typography textAlign="center">View Reservation</Typography>
                   </MenuItem>
                 </>
-
               ) : (
                 <>
                   <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
                     <Typography textAlign="center">View Availabe Food</Typography>
                   </MenuItem>
-                  {/* Reserved Food */}
-                  <MenuItem onClick={() => navigate()}>
+                  <MenuItem onClick={() => navigate(ROUTES.RESERVED_FOOD)}>
                     <Typography textAlign="center">Your Reserved Food</Typography>
                   </MenuItem>
                 </>
@@ -137,14 +135,14 @@ const Navbar = () => {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                   //onClick={handleClick}
-                  onClick={() => navigate()}
+                  onClick={() => navigate(ROUTES.VIEW_MY_POSTING)}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   View My Posting
                 </Button>
                 {/* my resrvation */}
                 <Button
-                  onClick={() => navigate()}
+                  onClick={() => navigate(ROUTES.VIEW_RESERVATION)}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   View Reservation
@@ -164,9 +162,8 @@ const Navbar = () => {
                 >
                   View Availabe Food
                 </Button>
-                {/* Reserved Food */}
                 <Button
-                  onClick={() => navigate()}
+                  onClick={() => navigate(ROUTES.RESERVED_FOOD)}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   Your Reserved Food
