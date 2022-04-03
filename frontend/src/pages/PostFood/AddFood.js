@@ -76,7 +76,7 @@ const AddFood = () => {
 
     const REGEX = {
         NAME: /^[a-zA-Z ,.'-]+$/,
-        SERVINGS: /^([0-9])$/,
+        SERVINGS: /^([0-9])+$/,
     };
 
     const validate = (value) => {
