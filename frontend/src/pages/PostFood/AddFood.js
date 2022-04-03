@@ -23,10 +23,13 @@ const AddFood = () => {
         name: "",
         type: "",
         servings: "",
-        pickUpLocation: "",
-        status: "Available",
         imageURL: "",
-        ownerId: "101"
+        pickUpLocation: "",
+        ownerId: "",
+        customerId: "",
+        foodStatus: "Available",
+        bookingStatus: "Confirmation Pending"
+
     };
 
     const [formErrors, setFormErrors] = useState(values);
@@ -43,7 +46,7 @@ const AddFood = () => {
     useEffect(() => {
 
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            navigate(ROUTES.FOOD_LISTING, { state: { formValues } });
+            navigate(ROUTES.VIEW_MY_POSTING, { state: { formValues } });
         }
     }, [formErrors]);
 
@@ -62,7 +65,8 @@ const AddFood = () => {
             setFormErrors(validate(formValues));
             setFormValues(formValues);
             setIsSubmit(true);
-            axios_api.post("/food/addFood", formValues)
+            const newFormValues = { ...formValues, ownerId: userId }
+            axios_api.post("/food/addFood", newFormValues)
                 .then((res) => res.json())
                 .then((result) => setFormValues(result.rows))
                 .catch((formErrors) => console.log('error'))
@@ -116,7 +120,6 @@ const AddFood = () => {
                     marginRight: "auto"
                 }}
             >
-
                 <Box
                     textAlign="center"
                     component="form"
