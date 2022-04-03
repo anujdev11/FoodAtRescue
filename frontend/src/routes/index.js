@@ -22,7 +22,7 @@ import ViewReservation from "../pages/FoodManagement/ViewReservation";
 import AddFood from "../pages/PostFood/AddFood";
 
 function Routing() {
-  const { initializeAuth } = useContext(AppContext);
+  const { initializeAuth, dispatch } = useContext(AppContext);
   const location = useLocation();
   const openPages = [
     {
