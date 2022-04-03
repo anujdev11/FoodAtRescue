@@ -15,6 +15,7 @@ import axios_api from '../../common/axios';
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/userContext";
 import Food from "../../assets/images/postFood.jpeg";
+import { Row, Column } from "../PostFood/PostFood.style";
 
 const { Title } = Typography;
 
@@ -205,15 +206,30 @@ const AddFood = () => {
                             error={!!formErrors.pickUpLocation}
                             helperText={formErrors.pickUpLocation ? formErrors.pickUpLocation : ""}
                         />
-                        <Grid item xs={12} sm={3} sx={{ marginTop: "12px" }}>
+                        {/* <Grid item xs={12} sm={3} sx={{ marginTop: "12px" }}>
                             <Typography component="body1" variant="subtitle1">
                                 Select Image:
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={9} sx={{ marginTop: 1 }}>
                             <div><input type="file" name="image" onChange={handleUpload} /></div>
-                        </Grid>
+                        </Grid> */}
+                        <Box textAlign="left" sx={{
+                            marginTop: "20px",
+                            marginBottom: "20px"
+                        }} >
+                            <Row>
+                                <Column>
+                                    <Typography component="body1" variant="subtitle1">
+                                        Select Image:
+                                    </Typography>
+                                </Column>
+                                <Column>
+                                    <div><input type="file" name="image" onChange={handleUpload} /></div>
+                                </Column>
+                            </Row>
 
+                        </Box>
                     </div>
                     <div>
                         <Button
