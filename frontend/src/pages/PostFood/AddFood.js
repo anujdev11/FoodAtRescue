@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormControl, Select } from '@mui/material';
-import { TextField, Box, Paper } from "@mui/material";
+import { TextField, Box, Paper, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -35,6 +35,7 @@ const AddFood = () => {
     const [formErrors, setFormErrors] = useState(values);
     const [formValues, setFormValues] = useState(values);
     const [isSubmit, setIsSubmit] = useState(false);
+    const [fileData, setFileData] = useState();
 
     const navigate = useNavigate();
 
@@ -55,7 +56,10 @@ const AddFood = () => {
         const value = e.target.value;
         setFormValues({ ...formValues, [name]: value });
     };
+    const handleUpload = (e) => {
+        setFileData(e.target.files[0]);
 
+    };
     const handleClick = (e) => {
         if (!authenticated) {
             toast.error("You need to login first!!!");
@@ -201,6 +205,14 @@ const AddFood = () => {
                             error={!!formErrors.pickUpLocation}
                             helperText={formErrors.pickUpLocation ? formErrors.pickUpLocation : ""}
                         />
+                        <Grid item xs={12} sm={3} sx={{ marginTop: "12px" }}>
+                            <Typography component="body1" variant="subtitle1">
+                                Select Image:
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={9} sx={{ marginTop: 1 }}>
+                            <div><input type="file" name="image" onChange={handleUpload} /></div>
+                        </Grid>
 
                     </div>
                     <div>
