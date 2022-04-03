@@ -23,6 +23,7 @@ export const USER = "USER";
 export const ADMIN = "ADMIN";
 export const USER_ID = "USER_ID";
 export const ROLE = "ROLE";
+export const AUTHENTICATED = "AUTHENTICATED";
 
 export const APP_ROLES = {
   APP_USER: "app_user",
