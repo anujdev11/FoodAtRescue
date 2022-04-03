@@ -87,6 +87,9 @@ const AddFood = () => {
         } else if (!REGEX.SERVINGS.test(value.servings)) {
             errors.servings = "Enter valid Servings";
         }
+        if (!value.type) {
+            errors.type = "Food Type is Required!";
+        }
         if (!value.pickUpLocation) {
             errors.pickUpLocation = "Food Pick Up Location is Required!";
         }
@@ -161,9 +164,9 @@ const AddFood = () => {
                                 error={!!formErrors.type}
                                 helperText={formErrors.type ? formErrors.type : ""}
                             >
-                                <MenuItem value="">
+                                {/* <MenuItem value="">
                                     <em>None</em>
-                                </MenuItem>
+                                </MenuItem> */}
                                 <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                                 <MenuItem value="Non-Vegetarian">Non-Vegetarian</MenuItem>
                                 <MenuItem value="Vegan">Vegan</MenuItem>
