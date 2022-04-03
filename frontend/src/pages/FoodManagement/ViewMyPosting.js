@@ -93,7 +93,7 @@ const ViewMyPosting = () => {
                                             <Chip label={food.type} variant="outlined" sx={{ mt: '10px', mr: '10px' }} />
                                             <Chip label={`Servings: ${food.servings}`} variant="outlined" sx={{ mt: '10px' }} />
                                             <br />
-                                            <Button
+                                            {/* <Button
                                                 variant="contained"
                                                 sx={{
                                                     marginTop: 2,
@@ -105,7 +105,7 @@ const ViewMyPosting = () => {
                                                 onClick={() => { }}
                                             >
                                                 Update
-                                            </Button>
+                                            </Button> */}
 
                                             <Button
                                                 variant="contained"

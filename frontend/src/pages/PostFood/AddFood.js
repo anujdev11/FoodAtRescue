@@ -45,12 +45,12 @@ const AddFood = () => {
         dispatch,
     } = useContext(AppContext);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            navigate(ROUTES.VIEW_MY_POSTING, { state: { formValues } });
-        }
-    }, [formErrors]);
+    //     if (Object.keys(formErrors).length === 0 && isSubmit) {
+    //         navigate(ROUTES.VIEW_MY_POSTING, { state: { formValues } });
+    //     }
+    // }, [formErrors]);
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -67,14 +67,39 @@ const AddFood = () => {
             navigate(ROUTES.LOGIN);
         } else {
             e.preventDefault();
+            //debugger;
             setFormErrors(validate(formValues));
             setFormValues(formValues);
             setIsSubmit(true);
             const newFormValues = { ...formValues, ownerId: userId }
-            axios_api.post("/food/addFood", newFormValues)
-                .then((res) => res.json())
-                .then((result) => setFormValues(result.rows))
-                .catch((formErrors) => console.log('error'))
+            const data = new FormData();
+            data.append('image', fileData);
+            if (fileData) {
+                axios_api.post("/food/uploadImage", data)
+                    .then((response) => {
+                        const path = response.data;
+                        const post = { ...newFormValues, imageURL: path }
+                        setFormValues(post);
+
+                        axios_api.post("/food/addFood", post)
+                            .then((res) => res.json())
+                            .then((result) => setFormValues(result.rows))
+                            .catch((formErrors) => console.log('error'))
+
+                        navigate(ROUTES.VIEW_MY_POSTING);
+
+                    }).catch((err) => {
+                        console.log(err?.response?.data?.message);
+                    });
+
+            } else {
+                axios_api.post("/food/addFood", newFormValues)
+                    .then((res) => res.json())
+                    .then((result) => setFormValues(result.rows))
+                    .catch((formErrors) => console.log('error'))
+
+                navigate(ROUTES.VIEW_MY_POSTING);
+            }
         }
 
     };
