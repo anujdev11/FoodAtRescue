@@ -7,7 +7,7 @@ import { createContext, useReducer } from "react";
 
 import * as ActionTypes from "../common/actionTypes";
 import axios from "../common/axios";
-import { TOKEN, USER, USER_ID, ROLE, AUTHENTICATED } from "../common/constants";
+import { TOKEN, USER, USER_ID, ROLE } from "../common/constants";
 
 const getLoggedInUser = () => {
   let loggedInUser = localStorage.getItem(USER);
@@ -23,17 +23,12 @@ const getUserId = () => {
 const getRole = () => {
   return localStorage.getItem(ROLE) ? localStorage.getItem(ROLE) : "app_user";
 };
-const getAuthenticated = () => {
-  return localStorage.getItem(AUTHENTICATED)
-    ? localStorage.getItem(ROLE)
-    : "app_user";
-};
 
 const initialState = {
   currentUser: getLoggedInUser() || {},
   userId: getUserId(),
   authToken: localStorage.getItem(TOKEN),
-  authenticated: getAuthenticated(),
+  authenticated: false,
   role: getRole(),
 };
 
@@ -51,10 +46,8 @@ const reducer = (state, action) => {
       localStorage.setItem(USER_ID, action.data);
       return { ...state, userId: action.data };
     case ActionTypes.SET_AUTHENTICATED:
-      localStorage.setItem(AUTHENTICATED, action.data);
       return { ...state, authenticated: action.data };
     case ActionTypes.SET_TOKEN:
-      localStorage.setItem(TOKEN, action.data);
       return { ...state, authToken: action.data };
     case ActionTypes.SET_ROLE:
       localStorage.setItem(ROLE, action.data);
