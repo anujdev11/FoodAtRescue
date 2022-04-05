@@ -22,6 +22,9 @@ import { APP_ROLES, ROUTES } from "../../../common/constants";
 import UserPool from "../../../aws/cognitoUserPool";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 const SignupFoodOwner = () => {
+  const {
+    state: { authenticated },
+  } = useContext(AppContext);
   let navigate = useNavigate();
   const {
     register,

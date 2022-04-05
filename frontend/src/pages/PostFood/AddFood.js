@@ -33,6 +33,7 @@ const AddFood = () => {
 
     const [formErrors, setFormErrors] = useState(values);
     const [formValues, setFormValues] = useState(values);
+    const [isSubmit, setIsSubmit] = useState(false);
     const [fileData, setFileData] = useState();
 
     const navigate = useNavigate();

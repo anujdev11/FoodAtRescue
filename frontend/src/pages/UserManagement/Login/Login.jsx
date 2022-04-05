@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../../context/userContext";
 import * as ActionTypes from "../../../common/actionTypes";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { APP_ROLES, ROUTES } from "../../../common/constants";
@@ -24,11 +25,16 @@ import UserPool from "../../../aws/cognitoUserPool";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 
 const Login = () => {
+  const {
+    state: { authenticated },
+    dispatch,
+  } = useContext(AppContext);
   let navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
     trigger,
   } = useForm();
   const onSubmit = (data) => {
