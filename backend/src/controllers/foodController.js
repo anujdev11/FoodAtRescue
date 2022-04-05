@@ -151,7 +151,7 @@ const updateFood = async (req, res) => {
                 "Your Posted Food Need Approval",
                 {
                     imageLink: food.Item.imageURL,
-                    link: "ec2-44-201-9-16.compute-1.amazonaws.com:8080/view_reservation",
+                    link: "http://foodatrescue-dev.us-east-1.elasticbeanstalk.com/view_reservation",
                 },
                 "../utils/templates/approvalNotification.html"
             );
