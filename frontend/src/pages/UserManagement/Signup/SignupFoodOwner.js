@@ -70,7 +70,6 @@ const SignupFoodOwner = () => {
       attributeList,
       null,
       function (err, result) {
-        debugger;
         if (err) {
           toast.error(err?.message || "Something went wrong");
           return;

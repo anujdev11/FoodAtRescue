@@ -8,8 +8,8 @@ import Footer from "../Footer/Footer";
 const HomePage = () => {
   const {
     state: { authenticated, currentUser, userId, authToken },
-    dispatch,
   } = useContext(AppContext);
+  console.log("Home:" + authenticated)
   return (
     <>
       <NavigationBar />

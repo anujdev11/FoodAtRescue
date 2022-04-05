@@ -48,7 +48,6 @@ const reducer = (state, action) => {
     case ActionTypes.SET_AUTHENTICATED:
       return { ...state, authenticated: action.data };
     case ActionTypes.SET_TOKEN:
-      localStorage.setItem(TOKEN, action.data);
       return { ...state, authToken: action.data };
     case ActionTypes.SET_ROLE:
       localStorage.setItem(ROLE, action.data);

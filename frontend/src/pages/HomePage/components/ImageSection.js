@@ -31,7 +31,7 @@ export default function ProductHero() {
         variant="contained"
         size="large"
         component="a"
-        onClick={(event) => navigate(ROUTES.PROPERTY_LISTING)}
+        onClick={(event) => navigate(ROUTES.FOOD_LISTING)}
         sx={{ minWidth: 200, mt: 15 }}
       >
         View All Food Postings
