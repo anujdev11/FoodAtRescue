@@ -1,6 +1,6 @@
 // Author: Anuj Dev (B00900887)
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import MainScreen from "../../../assets/images/LoginPage.png";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -17,7 +17,6 @@ import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/userContext";
 import * as ActionTypes from "../../../common/actionTypes";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { APP_ROLES, ROUTES } from "../../../common/constants";
@@ -25,16 +24,11 @@ import UserPool from "../../../aws/cognitoUserPool";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 
 const Login = () => {
-  const {
-    state: { authenticated, currentUser, userId, authToken },
-    dispatch,
-  } = useContext(AppContext);
   let navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     trigger,
   } = useForm();
   const onSubmit = (data) => {

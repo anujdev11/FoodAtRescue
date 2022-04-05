@@ -1,6 +1,6 @@
 // Author: Anuj Dev (B00900887)
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import MainScreen from "../../../assets/images/Signup.jpg";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -22,9 +22,6 @@ import { APP_ROLES, ROUTES } from "../../../common/constants";
 import UserPool from "../../../aws/cognitoUserPool";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 const SignupFoodOwner = () => {
-  const {
-    state: { authenticated },
-  } = useContext(AppContext);
   let navigate = useNavigate();
   const {
     register,
