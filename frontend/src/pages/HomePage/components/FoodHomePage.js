@@ -1,7 +1,7 @@
 // Author: Anuj Dev (B00900887)
 
 import * as React from "react";
-import { Box, Typography, Container, ButtonBase } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 
 export default function FoodHomePage() {
   return (

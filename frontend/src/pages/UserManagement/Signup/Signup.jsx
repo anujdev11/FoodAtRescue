@@ -15,16 +15,12 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/userContext";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { toast } from "react-toastify";
 import { APP_ROLES, ROUTES } from "../../../common/constants";
 import UserPool from "../../../aws/cognitoUserPool";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 const Signup = () => {
-  const {
-    state: { authenticated },
-  } = useContext(AppContext);
   let navigate = useNavigate();
   const {
     register,

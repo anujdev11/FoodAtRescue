@@ -1,6 +1,6 @@
 // Author: Anuj Dev (B00900887)
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import MainScreen from "../../../assets/images/LoginPage.png";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -26,7 +26,7 @@ import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 
 const Login = () => {
   const {
-    state: { authenticated, currentUser, userId, authToken },
+    state: { authenticated },
     dispatch,
   } = useContext(AppContext);
   let navigate = useNavigate();
