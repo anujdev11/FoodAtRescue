@@ -29,9 +29,7 @@ const Navbar = () => {
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  //console.log(role);
   const handleOpenNavMenu = (event) => {
-    console.log(event);
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
@@ -39,7 +37,6 @@ const Navbar = () => {
   };
 
   const handleCloseNavMenu = () => {
-    console.log("test");
     setAnchorElNav(null);
   };
 
@@ -98,7 +95,7 @@ const Navbar = () => {
                 display: { xs: "block", md: "none", color: "black" },
               }}
             >
-              {(role == 'food_owner') ? (
+              {role == "food_owner" ? (
                 <>
                   {/* my posting */}
                   <MenuItem onClick={() => navigate(ROUTES.VIEW_MY_POSTING)}>
@@ -112,21 +109,24 @@ const Navbar = () => {
               ) : (
                 <>
                   <MenuItem onClick={() => navigate(ROUTES.FOOD_LISTING)}>
-                    <Typography textAlign="center">View Availabe Food</Typography>
+                    <Typography textAlign="center">
+                      View Availabe Food
+                    </Typography>
                   </MenuItem>
                   <MenuItem onClick={() => navigate(ROUTES.RESERVED_FOOD)}>
-                    <Typography textAlign="center">Your Reserved Food</Typography>
+                    <Typography textAlign="center">
+                      Your Reserved Food
+                    </Typography>
                   </MenuItem>
                 </>
               )}
-
             </Menu>
           </Box>
           <Box noWrap sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <img height={40} width={80} src={Logo} alt="logo" />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {(role == 'food_owner') ? (
+            {role == "food_owner" ? (
               <>
                 {/* my posting */}
                 <Button
@@ -148,7 +148,6 @@ const Navbar = () => {
                   View Reservation
                 </Button>
               </>
-
             ) : (
               <>
                 <Button
@@ -170,7 +169,6 @@ const Navbar = () => {
                 </Button>
               </>
             )}
-
           </Box>
           <Box
             display="flex"
@@ -179,7 +177,7 @@ const Navbar = () => {
             // width={225}
             sx={{ flexGrow: 0 }}
           >
-            {(role == 'food_owner') ? (
+            {role == "food_owner" ? (
               /* post ad */
               <Button
                 variant="contained"
@@ -194,8 +192,7 @@ const Navbar = () => {
                 Post Food
               </Button>
             ) : (
-              <>
-              </>
+              <></>
             )}
             {authenticated ? (
               <Settings />

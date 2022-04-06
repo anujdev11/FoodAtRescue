@@ -129,7 +129,7 @@ Resources:
   FoodTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: Food1
+      TableName: Food
       AttributeDefinitions:
         - AttributeName: "id"
           AttributeType: "S"
@@ -204,7 +204,7 @@ Resources:
         CaseSensitive: false
       AutoVerifiedAttributes:
         - email
-      UserPoolName: FoodAtRescueTesting
+      UserPoolName: FoodAtRescue
       Schema:
         - Name: email
           AttributeDataType: String
@@ -285,15 +285,3 @@ Outputs:
   HostedUIURL:
     Value: !Sub https://${CognitoDomain}.auth.us-west-2.amazoncognito.com/login?client_id=${UserPoolClient}&response_type=code&scope=email+openid+phone+profile
     Description: The hosted UI URL
-# FrontendEnviroment:
-#   Type: AWS::ElasticBeanstalk::Environment
-#   Properties:
-#     ApplicationName: !Ref ForntendElasticBeanstalk
-#     Description: "AWS Elastic Beanstalk Environment for React JS"
-#     EnvironmentName: foodatrescuefrontendenv
-#     SolutionStackName: "64bit Amazon Linux 2 v3.4.13 running Docker"
-#     OptionSettings:
-#       - Namespace: "aws:autoscaling:launchconfiguration"
-#         OptionName: InstanceType
-#         Value: t2.micro
-
