@@ -1,6 +1,6 @@
 // Author: Anuj Dev (B00900887)
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import MainScreen from "../../../assets/images/Signup.jpg";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";

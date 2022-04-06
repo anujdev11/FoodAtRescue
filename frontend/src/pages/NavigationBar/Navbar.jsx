@@ -7,11 +7,8 @@ import {
   Typography,
   Menu,
   Container,
-  Avatar,
   Button,
-  Tooltip,
   MenuItem,
-  Divider,
 } from "@mui/material";
 import { AppContext } from "../../context/userContext";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,8 +16,6 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/Logo.png";
 import { ROUTES } from "../../common/constants";
 import Settings from "./components/Settings";
-
-const settings = ["Profile", "Change Password", "Logout"];
 
 const Navbar = () => {
   const {
@@ -32,25 +27,13 @@ const Navbar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <AppBar position="static" style={{ background: "#ffffff" }}>
